@@ -1,0 +1,51 @@
+version: "3:8"
+
+networks:
+  web:
+   external: true
+  internal:
+    external: false
+
+volumes:
+  database:
+    driver: local    
+
+services:
+  db:
+    image: postgres:10.5
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+       - ./database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - internal
+
+  api:
+    image: kyleconkright/hipstergram-api:1.0.0
+    build:
+      context: ./api
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    networks:
+      - web
+      - internal
+
+  web:
+    image: kyleconkright/hipstergram-api:1.0.0
+    restart: on-failure
+    build:
+      context: ./web
+    ports:
+      - 3000:3000
+    volumes:
+      - ./web:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - web
+      - internal
