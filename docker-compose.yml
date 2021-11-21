@@ -37,7 +37,7 @@ services:
       - internal
 
   web:
-    image: kyleconkright/hipstergram-api:1.0.0
+    image: kyleconkright/hipstergram-web:1.0.0
     restart: on-failure
     build:
       context: ./web
