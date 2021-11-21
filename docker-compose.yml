@@ -25,19 +25,22 @@ services:
       - internal
 
   api:
-    image: kyleconkright/hipstergram-api:1.0.0
+    image: kyleconkright/hipstergram-api:1.0.8
     build:
       context: ./api
     depends_on:
       - db
     ports:
       - "3001:3001"
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - web
       - internal
 
   web:
-    image: kyleconkright/hipstergram-api:1.0.0
+    image: kyleconkright/hipstergram-web:1.0.0
     restart: on-failure
     build:
       context: ./web

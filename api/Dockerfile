@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ./package*.json ./
 
-RUN npm install -q --no-color --no-progress
+RUN npm ci
 
 COPY ./ ./
 
