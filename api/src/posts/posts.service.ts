@@ -1,3 +1,4 @@
+import { User } from './../auth/user.entity';
 import { CreatePostDto } from './dto/post.dto';
 import { PostsRepository } from './posts.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -26,9 +27,9 @@ export class PostsService {
     if(res.affected === 0) throw new NotFoundException(`Post with ${id} not found.`);
   }
 
-  async createPost(postDto: CreatePostDto): Promise<Post> {
+  async createPost(postDto: CreatePostDto, user: User): Promise<Post> {
     const { title, body } = postDto;
-    const post = this.postsRepository.create({title, body})
+    const post = this.postsRepository.create({title, body, user})
     
     await this.postsRepository.save(post);
     return post;

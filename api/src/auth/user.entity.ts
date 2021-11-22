@@ -1,5 +1,6 @@
-import { Post } from './../posts/post.entity';
+import { Post } from "../posts/post.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class User {
@@ -10,6 +11,7 @@ export class User {
   username: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @OneToMany(_type => Post, post => post.user, {eager: true})

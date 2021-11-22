@@ -1,3 +1,4 @@
+import { User } from './../auth/user.entity';
 import { CreatePostDto } from './dto/post.dto';
 import { EntityRepository, Repository } from "typeorm";
 import { Post } from "./post.entity";

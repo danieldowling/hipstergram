@@ -1,7 +1,10 @@
+import { User } from './../auth/user.entity';
 import { CreatePostDto } from './dto/post.dto';
-import { Body, Controller, Get, Post, Param, Delete, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Delete, Patch, Query, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Post as Hipstergram } from './post.entity';
+import { GetUser } from '../auth/get-user.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
 export class PostsController {
@@ -25,8 +28,12 @@ export class PostsController {
   }
 
   @Post()
-  createPost(@Body() post: CreatePostDto): Promise<Hipstergram> {
-    return this.postsService.createPost(post);
+  @UseGuards(AuthGuard())
+  createPost(
+    @Body() post: CreatePostDto,
+    @GetUser() user: User
+  ): Promise<Hipstergram> {
+    return this.postsService.createPost(post, user);
   }
 
   @Patch(':id/update')
