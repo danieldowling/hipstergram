@@ -1,7 +1,9 @@
+import { DatabaseModule } from './database/database.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
+import DatabaseConfig from "./config/database.config"
 
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
@@ -9,11 +11,16 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: [`.env.stage.${process.env.STAGE}`],
-      validationSchema: configValidationSchema
+      validationSchema: configValidationSchema,
+      // load: [
+      //   () => ({ database: DatabaseConfig() }),
+      // ],
     }),
     PostsModule,
     AuthModule,
+    // DatabaseModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
