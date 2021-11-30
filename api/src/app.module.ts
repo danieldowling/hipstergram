@@ -3,8 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import DatabaseConfig from "./config/database.config"
 
-import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/user.module';
+import { PostsModule } from './posts/posts.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { DatabaseModule } from './database/database.module';
         () => ({ database: DatabaseConfig() }),
       ],
     }),
+    UsersModule,
     PostsModule,
     AuthModule,
     DatabaseModule,

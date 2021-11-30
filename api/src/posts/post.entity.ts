@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 import { Exclude } from "class-transformer";
 
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../auth/user.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Post {

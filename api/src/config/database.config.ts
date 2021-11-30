@@ -1,4 +1,4 @@
-import { User } from 'src/auth/user.entity';
+import { User } from 'src/users/user.entity';
 import { TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { join } from "path"
 import { Post } from 'src/posts/post.entity';

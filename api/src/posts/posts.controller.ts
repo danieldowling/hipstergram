@@ -1,9 +1,9 @@
-import { User } from './../auth/user.entity';
+import { User } from './../users/user.entity';
 import { CreatePostDto } from './dto/post.dto';
 import { Body, Controller, Get, Post, Param, Delete, Patch, Query, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Post as Hipstergram } from './post.entity';
-import { GetUser } from '../auth/get-user.decorator';
+import { GetUser } from '../users/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
