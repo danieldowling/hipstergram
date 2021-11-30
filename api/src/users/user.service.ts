@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { User } from './user.entity';
 import { UsersRepository } from './user.repository';
 
 @Injectable()
@@ -14,5 +15,10 @@ export class UserService {
       .where("LOWER(user.username) = LOWER(:username)", { username })
       .getOne();
     return user;
+  }
+
+  async getUserPosts(username): Promise<User> {
+    const user = await this.getUser(username);
+    return Object.assign(user, {count: user.posts.length})
   }
 }

@@ -13,5 +13,12 @@ export class UserController {
     @Param('username') username: string
   ): Promise<User> {
     return this.userService.getUser(username);
-  } 
+  }
+
+  @Get('/:username/posts')
+  getUserPosts(
+    @Param('username') username: string
+  ): Promise<User> {
+    return this.userService.getUserPosts(username);
+  }
 }
