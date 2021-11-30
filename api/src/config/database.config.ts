@@ -1,5 +1,7 @@
+import { User } from 'src/auth/user.entity';
 import { TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { join } from "path"
+import { Post } from 'src/posts/post.entity';
 
 export default () => ({
   type: process.env.DB_DIALECT || "postgres",
@@ -9,7 +11,7 @@ export default () => ({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   logging: process.env.DB_LOGGING === "true",
-  entities: [join(__dirname, "../", "**/*.entity{.ts,.js}")],
+  entities: [User, Post],
   migrations: [join(__dirname, "../", "database/migrations/**/*.ts")],
   synchronize: process.env.DB_SYNCHRONIZE === "true",
   dropSchema: process.env.DB_DROP_SCHEMA === "true",

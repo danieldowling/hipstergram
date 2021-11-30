@@ -1,20 +1,24 @@
 const path = require('path');
 const envConfig = require('dotenv').config({
-  path: path.resolve(__dirname, `.env${process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ''}`),
+  path: '.env.stage.dev'
+  // path: path.resolve(__dirname, `.env${process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ''}`),
 })
 
 function env(key) {
-  console.log({key})
   return envConfig.parsed[key] || process.env[key]
 }
 
-export default {
-  type: "postgres",
-  host: "db",
-  port: 3001,
-  username: "postgres",
-  password: "postgres",
+const baseConfig = {
+  type: env('DB_DIALECT'),
+  host: env('DB_HOST'),
+  port: env('DB_PORT'),
+  username: env('DB_USERNAME'),
+  password: env('DB_PASSWORD'),
   database: env('DB_DATABASE'),
   autoLoadEntities: true,
-  synchronize: true
+  synchronize: true,
+  entities: [path.resolve(__dirname, 'src/**/*.entity{.ts,.js}')],
+  migrations: [path.resolve(__dirname, 'src/database/migrations/**/*.ts')]
 }
+
+export default {...baseConfig}
