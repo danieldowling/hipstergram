@@ -16,6 +16,10 @@ export class Post {
   @Column({length: 255})
   @IsNotEmpty()
   body: string;
+  
+  @Column({default: 0})
+  @IsNotEmpty()
+  notice: number;
 
   @ManyToOne(_type => User, user => user.posts, {eager: false})
   @Exclude({toPlainOnly: true})

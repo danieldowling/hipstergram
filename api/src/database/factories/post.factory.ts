@@ -5,7 +5,8 @@ import { getRandomInt } from '../helpers'
 
 define(Post, (faker: typeof Faker) => {
   const post = new Post()
-  post.body = faker.random.words(getRandomInt(11, 21))
-  post.title = faker.random.words(getRandomInt(3, 6))
+  post.title = faker.lorem.sentence(getRandomInt(1, 3));
+  post.body = faker.lorem.sentences(2);
+  post.notice = getRandomInt(0, 95);
   return post
 })
