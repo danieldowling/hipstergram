@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+
+import { ConfigModule } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import DatabaseConfig from "./config/database.config"
 
@@ -10,6 +12,9 @@ import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot({
+      autoSchemaFile: 'schema.gql',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [`.env.stage.${process.env.STAGE}`],

@@ -10,10 +10,11 @@ export class UserService {
   ) { }
 
   async getUser(username) {
-    const user = await this.usersRepository.createQueryBuilder("user")
-      .leftJoinAndSelect("user.posts", "post")
-      .where("LOWER(user.username) = LOWER(:username)", { username })
-      .getOne();
+    // const user = await this.usersRepository.createQueryBuilder("user")
+    //   .leftJoinAndSelect("user.posts", "post")
+    //   .where("LOWER(user.username) = LOWER(:username)", { username })
+    //   .getOne();
+    const user = await this.usersRepository.findOne({where: {username}})
     return user;
   }
 
