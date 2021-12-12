@@ -1,15 +1,21 @@
 import ReactDOM from 'react-dom';
-import SignUp from './Components/SignUp';
+import Header from './common/Header';
+import SignUp from './common/SignUp';
+import LogIn from './common/LogIn';
+import Home from './common/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
   return (
     <div>
-      <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <span className="font-semibold text-xl tracking-tight">Hipstergram.</span>
-        </div>
-      </nav>
-      <SignUp />
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SignUp />} /> 
+          <Route path="login" element={<LogIn />} />
+          <Route path="home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

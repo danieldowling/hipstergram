@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios';
 import '../tailwind.output.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  let navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setUsername('');
     setPassword('');
 
@@ -17,17 +20,25 @@ const SignUp: React.FC = () => {
     console.log(username);
     console.log(password);
 
-    axios.post('http://localhost:3001/auth/signup', sendData)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
+    try {
+      const data = await axios.post('http://localhost:3001/auth/signup', sendData);
+      console.log(data);
+      // if success
+      // redirect with data in store
+      navigate("/home");
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
 
+  const handleLogIn = () => {
+    navigate("/login");
+  }
+
   return <div className="container mx-auto">
+      <div className="flex justify-center p-4">
+        <h3>Never been here before? Sign on up!</h3>
+      </div>
       <div className="flex justify-center">
         <form className="my-8">
           <div>
@@ -49,6 +60,9 @@ const SignUp: React.FC = () => {
           <div className="md:flex md:items-center">
               <div className="mx-auto p-5">
                 <button onClick={handleClick} className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">Click Me To Sign Up</button>
+              </div>
+              <div>
+                <button onClick={handleLogIn}>Log In</button>
               </div>
           </div>
         </form>
