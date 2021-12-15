@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
+import AuthService from '../services/auth.service'
 import '../tailwind.output.css';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
+  const authService = new AuthService();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
@@ -14,14 +15,12 @@ const SignUp: React.FC = () => {
     setPassword('');
 
     const sendData = {
-      username: username,
-      password: password
+      username,
+      password
     };
-    console.log(username);
-    console.log(password);
 
     try {
-      const data = await axios.post('http://localhost:3001/auth/signup', sendData);
+      const data = await authService.signup(sendData);
       console.log(data);
       // if success
       // redirect with data in store
