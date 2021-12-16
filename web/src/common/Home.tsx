@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+//import { useState } from 'react';
 
 // interface PostData {
 //   id: string;
@@ -9,12 +10,12 @@ import axios from 'axios';
 // };
 
 const Home: React.FC = () => {
-  let data;
-  let postData;
+  let data!: {id: string, title: string, body: string, notice: number};
+  //let postData;
   const getPosts = async () => {
     try {
       data = await axios.get('http://localhost:3001/posts');
-      postData = data.data[0].id;
+      //postData = data
       //console.log(data.data[0]);
     } catch(error: any) {
       throw new Error(error);
@@ -25,7 +26,7 @@ const Home: React.FC = () => {
   
   return <div>
     <ul className="list-disc list-inside">
-      <li>{postData}</li>
+      <li>{data && data.id}</li>
     </ul>
   </div>
 }
