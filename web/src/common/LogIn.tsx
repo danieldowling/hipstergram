@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
+import AuthService from '../services/auth.service';
 import '../tailwind.output.css';
 import { useNavigate } from 'react-router-dom';
 
 const LogIn: React.FC = () => {
+  const authService = new AuthService();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
@@ -13,16 +14,13 @@ const LogIn: React.FC = () => {
     setUsername('');
     setPassword('');
 
-    const sendData = {
+    const userData = {
       username: username,
       password: password
     };
-    console.log(username);
-    console.log(password);
 
     try {
-      const data = await axios.post('http://localhost:3001/auth/signin', sendData);
-      console.log(data);
+      await authService.signin(userData);
       // if success
       // redirect with data in store
       navigate("/home");
