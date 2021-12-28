@@ -1,22 +1,24 @@
 import React from 'react';
-import axios from 'axios';
-//import { useState } from 'react';
-
-// interface PostData {
-//   id: string;
-//   title: string;
-//   body: string;
-//   notice: number;
-// };
+import BaseHttpService from '../services/base-http.service';
 
 const Home: React.FC = () => {
-  let data!: {id: string, title: string, body: string, notice: number};
-  //let postData;
+  const baseHttpService = new BaseHttpService();
+  let data: any;
+  let posts: any | undefined;
+  let postMap: any | undefined;
+
   const getPosts = async () => {
     try {
-      data = await axios.get('http://localhost:3001/posts');
-      //postData = data
-      //console.log(data.data[0]);
+      data = await baseHttpService.get('posts', {});
+      posts = data.data;
+      console.log(posts);
+      postMap = posts.map((post: any) => (
+        <li key={post.title}>
+          <p>{post.title}</p>
+        </li>
+      ));
+      console.log(postMap);
+      return postMap;
     } catch(error: any) {
       throw new Error(error);
     }
@@ -26,7 +28,9 @@ const Home: React.FC = () => {
   
   return <div>
     <ul className="list-disc list-inside">
-      <li>{data && data.id}</li>
+      <div>
+        {postMap}
+      </div>
     </ul>
   </div>
 }
