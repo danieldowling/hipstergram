@@ -19,7 +19,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getPosts()
-  }, [])
+  })
 
   return <div>
     <ul className="list-inside">
