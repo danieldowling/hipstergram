@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import Header from './common/Header';
 import SignUp from './common/SignUp';
 import LogIn from './common/LogIn';
-import Home from './common/Home';
+import Home from './Pages/Home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
