@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import AuthService from '../services/auth.service';
 import '../tailwind.output.css';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/user.context';
 
 const LogIn: React.FC = () => {
   const authService = new AuthService();
@@ -10,13 +11,19 @@ const LogIn: React.FC = () => {
   
   let navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
+
+  if(user.accessToken) {
+    navigate("/home");
+  }
+
   const handleClick = async () => {
     setUsername('');
     setPassword('');
 
     const userData = {
-      username: username,
-      password: password
+      username,
+      password
     };
 
     try {
