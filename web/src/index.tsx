@@ -4,9 +4,12 @@ import SignUp from './common/SignUp';
 import LogIn from './common/LogIn';
 import Home from './Pages/Home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import UserContextProvider from './contexts/user.context';
+
 
 const App = () => {
   return (
+    <UserContextProvider>
     <div>
       <Header />
       <BrowserRouter>
@@ -17,6 +20,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
     </div>
+    </UserContextProvider>
   );
 };
 

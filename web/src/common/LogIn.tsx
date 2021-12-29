@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthService from '../services/auth.service';
 import '../tailwind.output.css';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/user.context';
 
 const LogIn: React.FC = () => {
   const authService = new AuthService();
@@ -10,13 +11,22 @@ const LogIn: React.FC = () => {
   
   let navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log({user});
+    if(user.accessToken) {
+      navigate("/home");
+    }
+  })
+
   const handleClick = async () => {
     setUsername('');
     setPassword('');
 
     const userData = {
-      username: username,
-      password: password
+      username,
+      password
     };
 
     try {
@@ -29,9 +39,10 @@ const LogIn: React.FC = () => {
     }
   };
 
-  return <div className="container mx-auto">
+  return (
+  <div className="container mx-auto">
       <div className="flex justify-center p-4">
-        <h3>Been here before? Log on in!</h3>
+        <h3>Been here before? Log on in! {user.accessToken}</h3>
       </div>
       <div className="flex justify-center">
         <form className="my-8">
@@ -58,7 +69,7 @@ const LogIn: React.FC = () => {
           </div>
         </form>
       </div>
-  </div>
+  </div>)
 };
 
 export default LogIn;
