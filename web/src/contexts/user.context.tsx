@@ -1,23 +1,35 @@
-import { createContext } from 'react';
+import { createContext, useEffect } from 'react';
 import httpService from './../services/base-http.service';
 
 export interface User {
-  accessToken?: string;
+  accessToken?: string | null;
 }
 
 const DefaultUserState: User = {
-  accessToken: '',
+  accessToken: null,
 };
 
 export const UserContext = createContext({
-  user: DefaultUserState,
+  user: DefaultUserState
 });
 
 const UserContextProvider = (props: any) => {
-  // const user: User = DefaultUserState;
   const http = new httpService();
-  const accessToken = http.accessToken;
-  const user = { accessToken };
+  let user: User = DefaultUserState;
+
+  useEffect(() => {
+    async function getAccessToken() {
+      try {
+        const accessToken = await http.accessToken;
+        user = { accessToken };
+        console.log({user});
+      } catch(error) {
+        console.log({error})
+      }
+    }
+    getAccessToken();
+  })
+ 
 
   return (
     <UserContext.Provider value={{ user }}>

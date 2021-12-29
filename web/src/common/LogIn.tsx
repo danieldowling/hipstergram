@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthService from '../services/auth.service';
 import '../tailwind.output.css';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +13,12 @@ const LogIn: React.FC = () => {
 
   const { user } = useContext(UserContext);
 
-  if(user.accessToken) {
-    navigate("/home");
-  }
+  useEffect(() => {
+    console.log({user});
+    if(user.accessToken) {
+      navigate("/home");
+    }
+  })
 
   const handleClick = async () => {
     setUsername('');
@@ -36,9 +39,10 @@ const LogIn: React.FC = () => {
     }
   };
 
-  return <div className="container mx-auto">
+  return (
+  <div className="container mx-auto">
       <div className="flex justify-center p-4">
-        <h3>Been here before? Log on in!</h3>
+        <h3>Been here before? Log on in! {user.accessToken}</h3>
       </div>
       <div className="flex justify-center">
         <form className="my-8">
@@ -65,7 +69,7 @@ const LogIn: React.FC = () => {
           </div>
         </form>
       </div>
-  </div>
+  </div>)
 };
 
 export default LogIn;
