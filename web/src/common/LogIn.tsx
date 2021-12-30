@@ -39,6 +39,10 @@ const LogIn: React.FC = () => {
     }
   };
 
+  const handleSignUp = () => {
+    navigate('/signup');
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex justify-center p-4">
@@ -85,6 +89,9 @@ const LogIn: React.FC = () => {
               >
                 Click Me To Log In
               </button>
+            </div>
+            <div>
+              <button onClick={handleSignUp}>Sign Up</button>
             </div>
           </div>
         </form>
