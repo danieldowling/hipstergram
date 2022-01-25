@@ -13,16 +13,16 @@ export const UserContext = createContext({
   user: DefaultUserState
 });
 
+let user: User = DefaultUserState;
+
 const UserContextProvider = (props: any) => {
   const http = new httpService();
-  let user: User = DefaultUserState;
-
+  
   useEffect(() => {
     async function getAccessToken() {
       try {
         const accessToken = await http.accessToken;
         user = { accessToken };
-        console.log({user});
       } catch(error) {
         console.log({error})
       }

@@ -1,5 +1,6 @@
-import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
+import { NotFoundException, UseGuards } from '@nestjs/common';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard, CurrentUser } from 'src/auth/auth.guard';
 import { PostService } from 'src/posts/post.service';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -12,7 +13,7 @@ export class UsersResolver {
     ) {}
 
   @Query(returns => User)
-  async user(@Args('username') username: string): Promise<User> {
+  async user(@Args('username', { nullable: true }) username: string): Promise<User> {
     const user = await this.userService.getUser(username);
     if (!user) {
       throw new NotFoundException(username);
@@ -20,8 +21,15 @@ export class UsersResolver {
     return user;
   }
 
+  @Query(returns => User)
+  @UseGuards(GqlAuthGuard)
+  async me(@CurrentUser() user: User) {
+    return await this.userService.getUser(user.username);
+  }
+
   @ResolveField()
   async posts(@Parent() user: User) {
+    // need to use user to get correct posts
     const posts = await this.postService.getAllPosts()
     return posts;
   }

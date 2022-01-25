@@ -20,9 +20,18 @@ const Home: React.FC = () => {
     }
   };
 
+  const getUser = async () => {
+    try {
+      const user = await baseHttpService.getUser("Jasen11");
+    } catch(error: any) {
+      throw new Error(error);
+    }
+  }
+
   useEffect(() => {
+    getUser();
     getPosts();
-  });
+  }, [posts.length]);
 
   return (
     <div>

@@ -8,10 +8,10 @@ type Post {
   title: String!
   body: String!
   notice: Float!
-  user: User!
+  user: User
 }
 
-"""user """
+"""user"""
 type User {
   id: ID!
   username: String!
@@ -19,6 +19,39 @@ type User {
   posts: [Post!]!
 }
 
+"""signUpResult"""
+type SignUpResult {
+  id: ID!
+  username: String!
+  password: String!
+  posts: [Post!]!
+  accessToken: String!
+}
+
+"""signInResult"""
+type SignInResult {
+  id: ID!
+  username: String!
+  password: String!
+  posts: [Post!]!
+  accessToken: String!
+}
+
 type Query {
-  user(username: String!): User!
+  user(username: String): User!
+  me: User!
+  posts: [Post!]!
+  post(id: String!): Post!
+}
+
+type Mutation {
+  signIn(password: String!, username: String!): SignInResult!
+  signUp(password: String!, username: String!): SignUpResult!
+  createPost(post: CreatePostInput!): Post!
+}
+
+input CreatePostInput {
+  title: String!
+  body: String!
+  image_src: String
 }

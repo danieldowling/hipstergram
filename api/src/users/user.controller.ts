@@ -10,7 +10,7 @@ export class UserController {
 
   @Get('/:username')
   getUser(
-    @Param('username') username: string
+    @Param('username') username: string,
   ): Promise<User> {
     return this.userService.getUser(username);
   }
